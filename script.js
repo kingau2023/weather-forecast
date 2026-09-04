@@ -11,6 +11,8 @@ const windSpeed = document.querySelector("#wind-speed");
 const feelsLike = document.querySelector("#feels-like");
 const humidity = document.querySelector("#humidity");
 const precipitation = document.querySelector("#precipitation");
+const forecastPanel = document.querySelector(".forecast-panel");
+const forecastGrid = document.querySelector("#forecast-grid");
 let selectedLocation = null;
 
 function getWeatherCondition(code) {
@@ -51,6 +53,7 @@ async function getCurrentWeather(location) {
     latitude: location.latitude,
     longitude: location.longitude,
     current: "temperature_2m,weather_code,wind_speed_10m,apparent_temperature,relative_humidity_2m,precipitation",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min",
     timezone: "auto"
   });
   const response = await fetch(endpoint);
@@ -60,6 +63,23 @@ async function getCurrentWeather(location) {
   }
 
   return response.json();
+}
+
+function renderForecast(daily) {
+  forecastGrid.replaceChildren();
+  daily.time.forEach((date, index) => {
+    const day = document.createElement("article");
+    day.className = "forecast-day";
+    const dayName = document.createElement("p");
+    dayName.textContent = new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" });
+    const conditionName = document.createElement("p");
+    conditionName.textContent = getWeatherCondition(daily.weather_code[index]);
+    const temperatures = document.createElement("p");
+    temperatures.textContent = `${Math.round(daily.temperature_2m_max[index])} / ${Math.round(daily.temperature_2m_min[index])}°C`;
+    day.append(dayName, conditionName, temperatures);
+    forecastGrid.append(day);
+  });
+  forecastPanel.hidden = false;
 }
 
 searchForm.addEventListener("submit", async (event) => {
@@ -78,6 +98,7 @@ searchForm.addEventListener("submit", async (event) => {
       feelsLike.textContent = Math.round(weather.current.apparent_temperature);
       humidity.textContent = weather.current.relative_humidity_2m;
       precipitation.textContent = weather.current.precipitation;
+      renderForecast(weather.daily);
       currentWeather.hidden = false;
       emptyState.textContent = "Current conditions";
     } catch (error) {
