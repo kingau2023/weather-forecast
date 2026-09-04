@@ -64,8 +64,8 @@ async function findCity(city) {
   const endpoint = new URL("https://geocoding-api.open-meteo.com/v1/search");
   endpoint.search = new URLSearchParams({
     name: city,
-    count: "1",
-    language: "en",
+    count: "10",
+    language: "uk",
     format: "json"
   });
   const response = await fetch(endpoint);
@@ -79,7 +79,8 @@ async function findCity(city) {
     throw new Error("City not found.");
   }
 
-  return data.results[0];
+  const normalizedCity = city.toLocaleLowerCase("uk");
+  return data.results.find((result) => result.name.toLocaleLowerCase("uk") === normalizedCity) || data.results[0];
 }
 
 async function getCurrentWeather(location) {
@@ -89,6 +90,9 @@ async function getCurrentWeather(location) {
     longitude: location.longitude,
     current: "temperature_2m,weather_code,wind_speed_10m,apparent_temperature,relative_humidity_2m,precipitation",
     daily: "weather_code,temperature_2m_max,temperature_2m_min",
+    temperature_unit: "celsius",
+    wind_speed_unit: "kmh",
+    precipitation_unit: "mm",
     timezone: "auto"
   });
   const response = await fetch(endpoint);
