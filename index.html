@@ -16,6 +16,7 @@
 
     <section class="weather-panel" aria-labelledby="weather-heading">
       <h2 id="weather-heading">Your forecast</h2>
+      <button class="unit-toggle" id="unit-toggle" type="button" aria-pressed="false">Use °F</button>
       <form class="search-form" id="search-form">
         <label for="city-input">City</label>
         <div class="search-row">
@@ -28,11 +29,11 @@
       <div class="current-weather" id="current-weather" hidden>
         <p class="location-name" id="location-name"></p>
         <p class="weather-icon" id="current-icon" aria-hidden="true"></p>
-        <p class="current-temperature"><span id="temperature">--</span>&deg;C</p>
+        <p class="current-temperature"><span id="temperature">--</span></p>
         <p id="condition">--</p>
         <p>Wind: <span id="wind-speed">--</span> km/h</p>
         <dl class="weather-details">
-          <div><dt>Feels like</dt><dd><span id="feels-like">--</span>&deg;C</dd></div>
+          <div><dt>Feels like</dt><dd><span id="feels-like">--</span></dd></div>
           <div><dt>Humidity</dt><dd><span id="humidity">--</span>%</dd></div>
           <div><dt>Precipitation</dt><dd><span id="precipitation">--</span> mm</dd></div>
         </dl>

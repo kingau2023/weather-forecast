@@ -59,8 +59,17 @@ h1 {
 }
 
 .weather-panel h2 {
+  display: inline-block;
   margin-bottom: 1rem;
   font-size: 1.5rem;
+}
+
+.unit-toggle {
+  float: right;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  color: #18324b;
+  background: #eaf4f6;
 }
 
 .search-form label {
@@ -185,6 +194,10 @@ button {
 
 .forecast-day p:last-child {
   margin-bottom: 0;
+}
+
+.forecast-day .temperature-range {
+  font-weight: 700;
 }
 
 .forecast-day .weather-icon {

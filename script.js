@@ -15,7 +15,15 @@ const humidity = document.querySelector("#humidity");
 const precipitation = document.querySelector("#precipitation");
 const forecastPanel = document.querySelector(".forecast-panel");
 const forecastGrid = document.querySelector("#forecast-grid");
+const unitToggle = document.querySelector("#unit-toggle");
 let selectedLocation = null;
+let latestWeather = null;
+let useFahrenheit = false;
+
+function formatTemperature(value) {
+  const converted = useFahrenheit ? (value * 9) / 5 + 32 : value;
+  return `${Math.round(converted)}°${useFahrenheit ? "F" : "C"}`;
+}
 
 function getWeatherCondition(code) {
   if (code === 0) return "Clear";
@@ -91,11 +99,18 @@ function renderForecast(daily) {
     icon.setAttribute("aria-hidden", "true");
     icon.textContent = getWeatherIcon(daily.weather_code[index]);
     const temperatures = document.createElement("p");
-    temperatures.textContent = `${Math.round(daily.temperature_2m_max[index])} / ${Math.round(daily.temperature_2m_min[index])}°C`;
+    temperatures.className = "temperature-range";
+    temperatures.textContent = `${formatTemperature(daily.temperature_2m_max[index])} / ${formatTemperature(daily.temperature_2m_min[index])}`;
     day.append(dayName, icon, conditionName, temperatures);
     forecastGrid.append(day);
   });
   forecastPanel.hidden = false;
+}
+
+function renderWeather(weather) {
+  temperature.textContent = formatTemperature(weather.current.temperature_2m);
+  feelsLike.textContent = formatTemperature(weather.current.apparent_temperature);
+  renderForecast(weather.daily);
 }
 
 searchForm.addEventListener("submit", async (event) => {
@@ -110,15 +125,14 @@ searchForm.addEventListener("submit", async (event) => {
     try {
       selectedLocation = await findCity(city);
       const weather = await getCurrentWeather(selectedLocation);
+      latestWeather = weather;
       locationName.textContent = `${selectedLocation.name}, ${selectedLocation.country}`;
-      temperature.textContent = Math.round(weather.current.temperature_2m);
+      renderWeather(weather);
       condition.textContent = getWeatherCondition(weather.current.weather_code);
       currentIcon.textContent = getWeatherIcon(weather.current.weather_code);
       windSpeed.textContent = Math.round(weather.current.wind_speed_10m);
-      feelsLike.textContent = Math.round(weather.current.apparent_temperature);
       humidity.textContent = weather.current.relative_humidity_2m;
       precipitation.textContent = weather.current.precipitation;
-      renderForecast(weather.daily);
       currentWeather.hidden = false;
       emptyState.textContent = "Current conditions";
     } catch (error) {
@@ -128,4 +142,11 @@ searchForm.addEventListener("submit", async (event) => {
       statusMessage.hidden = true;
     }
   }
+});
+
+unitToggle.addEventListener("click", () => {
+  useFahrenheit = !useFahrenheit;
+  unitToggle.textContent = useFahrenheit ? "Use °C" : "Use °F";
+  unitToggle.setAttribute("aria-pressed", String(useFahrenheit));
+  if (latestWeather) renderWeather(latestWeather);
 });
