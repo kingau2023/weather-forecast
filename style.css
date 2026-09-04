@@ -119,6 +119,44 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(90%, 620px);
+    padding: 3rem 0;
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    width: min(88%, 420px);
+    padding: 2rem 0 3rem;
+  }
+
+  .weather-panel {
+    padding: 1.25rem;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-row button {
+    width: 100%;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .empty-state {
   margin-top: 1.5rem;
   margin-bottom: 0;
