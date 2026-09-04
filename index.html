@@ -10,7 +10,10 @@
   <main class="app-shell">
     <header class="app-header">
       <p class="eyebrow">Local skies, clearly told</p>
-      <h1>WeatherApp</h1>
+      <div class="title-row">
+        <h1>WeatherApp</h1>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
+      </div>
       <p class="intro">A simple forecast for wherever you are headed next.</p>
     </header>
 
@@ -24,7 +27,7 @@
           <button type="submit">Search</button>
         </div>
       </form>
-      <p class="empty-state">Search for a city to see the latest weather.</p>
+      <p class="empty-state" aria-live="polite">Search for a city to see the latest weather.</p>
       <p class="status-message" id="status-message" role="status" hidden>Loading forecast...</p>
       <div class="current-weather" id="current-weather" hidden>
         <p class="location-name" id="location-name"></p>

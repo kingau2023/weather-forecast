@@ -16,10 +16,19 @@ const precipitation = document.querySelector("#precipitation");
 const forecastPanel = document.querySelector(".forecast-panel");
 const forecastGrid = document.querySelector("#forecast-grid");
 const unitToggle = document.querySelector("#unit-toggle");
+const themeToggle = document.querySelector("#theme-toggle");
 let selectedLocation = null;
 let latestWeather = null;
 let useFahrenheit = false;
 const savedCity = localStorage.getItem("weatherapp-city");
+const savedTheme = localStorage.getItem("weatherapp-theme");
+
+if (savedTheme === "dark") {
+  document.documentElement.dataset.theme = "dark";
+  themeToggle.textContent = "Light mode";
+  themeToggle.setAttribute("aria-pressed", "true");
+  themeToggle.setAttribute("aria-label", "Switch to light mode");
+}
 
 if (savedCity) {
   cityInput.value = savedCity;
@@ -156,4 +165,13 @@ unitToggle.addEventListener("click", () => {
   unitToggle.textContent = useFahrenheit ? "Use °C" : "Use °F";
   unitToggle.setAttribute("aria-pressed", String(useFahrenheit));
   if (latestWeather) renderWeather(latestWeather);
+});
+
+themeToggle.addEventListener("click", () => {
+  const isDark = document.documentElement.dataset.theme !== "dark";
+  document.documentElement.dataset.theme = isDark ? "dark" : "light";
+  localStorage.setItem("weatherapp-theme", isDark ? "dark" : "light");
+  themeToggle.textContent = isDark ? "Light mode" : "Dark mode";
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);
 });
