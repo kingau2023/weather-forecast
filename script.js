@@ -5,6 +5,7 @@ const cityInput = document.querySelector("#city-input");
 const emptyState = document.querySelector(".empty-state");
 const currentWeather = document.querySelector("#current-weather");
 const locationName = document.querySelector("#location-name");
+const currentIcon = document.querySelector("#current-icon");
 const temperature = document.querySelector("#temperature");
 const condition = document.querySelector("#condition");
 const windSpeed = document.querySelector("#wind-speed");
@@ -23,6 +24,16 @@ function getWeatherCondition(code) {
   if ([71, 73, 75, 77, 85, 86].includes(code)) return "Snow";
   if ([95, 96, 99].includes(code)) return "Thunderstorm";
   return "Mixed conditions";
+}
+
+function getWeatherIcon(code) {
+  if (code === 0) return "☀";
+  if ([1, 2, 3].includes(code)) return "☁";
+  if ([45, 48].includes(code)) return "〰";
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "☂";
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "❄";
+  if ([95, 96, 99].includes(code)) return "⚡";
+  return "○";
 }
 
 async function findCity(city) {
@@ -74,9 +85,13 @@ function renderForecast(daily) {
     dayName.textContent = new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" });
     const conditionName = document.createElement("p");
     conditionName.textContent = getWeatherCondition(daily.weather_code[index]);
+    const icon = document.createElement("p");
+    icon.className = "weather-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = getWeatherIcon(daily.weather_code[index]);
     const temperatures = document.createElement("p");
     temperatures.textContent = `${Math.round(daily.temperature_2m_max[index])} / ${Math.round(daily.temperature_2m_min[index])}°C`;
-    day.append(dayName, conditionName, temperatures);
+    day.append(dayName, icon, conditionName, temperatures);
     forecastGrid.append(day);
   });
   forecastPanel.hidden = false;
@@ -94,6 +109,7 @@ searchForm.addEventListener("submit", async (event) => {
       locationName.textContent = `${selectedLocation.name}, ${selectedLocation.country}`;
       temperature.textContent = Math.round(weather.current.temperature_2m);
       condition.textContent = getWeatherCondition(weather.current.weather_code);
+      currentIcon.textContent = getWeatherIcon(weather.current.weather_code);
       windSpeed.textContent = Math.round(weather.current.wind_speed_10m);
       feelsLike.textContent = Math.round(weather.current.apparent_temperature);
       humidity.textContent = weather.current.relative_humidity_2m;
