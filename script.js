@@ -6,9 +6,19 @@ const emptyState = document.querySelector(".empty-state");
 const currentWeather = document.querySelector("#current-weather");
 const locationName = document.querySelector("#location-name");
 const temperature = document.querySelector("#temperature");
-const weatherCode = document.querySelector("#weather-code");
+const condition = document.querySelector("#condition");
 const windSpeed = document.querySelector("#wind-speed");
 let selectedLocation = null;
+
+function getWeatherCondition(code) {
+  if (code === 0) return "Clear";
+  if ([1, 2, 3].includes(code)) return "Cloudy";
+  if ([45, 48].includes(code)) return "Foggy";
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "Rain";
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "Snow";
+  if ([95, 96, 99].includes(code)) return "Thunderstorm";
+  return "Mixed conditions";
+}
 
 async function findCity(city) {
   const endpoint = new URL("https://geocoding-api.open-meteo.com/v1/search");
@@ -60,7 +70,7 @@ searchForm.addEventListener("submit", async (event) => {
       const weather = await getCurrentWeather(selectedLocation);
       locationName.textContent = `${selectedLocation.name}, ${selectedLocation.country}`;
       temperature.textContent = Math.round(weather.current.temperature_2m);
-      weatherCode.textContent = weather.current.weather_code;
+      condition.textContent = getWeatherCondition(weather.current.weather_code);
       windSpeed.textContent = Math.round(weather.current.wind_speed_10m);
       currentWeather.hidden = false;
       emptyState.textContent = "Current conditions";
