@@ -19,6 +19,12 @@ const unitToggle = document.querySelector("#unit-toggle");
 let selectedLocation = null;
 let latestWeather = null;
 let useFahrenheit = false;
+const savedCity = localStorage.getItem("weatherapp-city");
+
+if (savedCity) {
+  cityInput.value = savedCity;
+  emptyState.textContent = `Ready to refresh the forecast for ${savedCity}.`;
+}
 
 function formatTemperature(value) {
   const converted = useFahrenheit ? (value * 9) / 5 + 32 : value;
@@ -126,6 +132,7 @@ searchForm.addEventListener("submit", async (event) => {
       selectedLocation = await findCity(city);
       const weather = await getCurrentWeather(selectedLocation);
       latestWeather = weather;
+      localStorage.setItem("weatherapp-city", city);
       locationName.textContent = `${selectedLocation.name}, ${selectedLocation.country}`;
       renderWeather(weather);
       condition.textContent = getWeatherCondition(weather.current.weather_code);
