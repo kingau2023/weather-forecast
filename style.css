@@ -100,6 +100,13 @@ button {
   color: #496274;
 }
 
+.status-message {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  color: #2c7a7b;
+  font-weight: 700;
+}
+
 .current-weather {
   margin-top: 2rem;
   padding-top: 1.5rem;

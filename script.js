@@ -3,6 +3,7 @@
 const searchForm = document.querySelector("#search-form");
 const cityInput = document.querySelector("#city-input");
 const emptyState = document.querySelector(".empty-state");
+const statusMessage = document.querySelector("#status-message");
 const currentWeather = document.querySelector("#current-weather");
 const locationName = document.querySelector("#location-name");
 const currentIcon = document.querySelector("#current-icon");
@@ -103,6 +104,9 @@ searchForm.addEventListener("submit", async (event) => {
 
   if (city) {
     emptyState.textContent = `Looking up ${city}...`;
+    statusMessage.hidden = false;
+    currentWeather.hidden = true;
+    forecastPanel.hidden = true;
     try {
       selectedLocation = await findCity(city);
       const weather = await getCurrentWeather(selectedLocation);
@@ -119,7 +123,9 @@ searchForm.addEventListener("submit", async (event) => {
       emptyState.textContent = "Current conditions";
     } catch (error) {
       selectedLocation = null;
-      emptyState.textContent = error.message;
+      emptyState.textContent = "We could not find that city or load its forecast. Please try again.";
+    } finally {
+      statusMessage.hidden = true;
     }
   }
 });
