@@ -1,7 +1,7 @@
 :root {
   color: #18324b;
-  background: #eaf4f6;
-  font-family: Georgia, "Times New Roman", serif;
+  background: #dceff1;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
 }
 
 * {
@@ -11,12 +11,13 @@
 body {
   margin: 0;
   min-width: 320px;
+  background: linear-gradient(140deg, #dceff1 0%, #f7f4eb 100%);
 }
 
 .app-shell {
   width: min(92%, 960px);
   margin: 0 auto;
-  padding: 5rem 0;
+  padding: 4rem 0 5rem;
 }
 
 .app-header {
@@ -39,6 +40,8 @@ p {
 
 h1 {
   margin-bottom: 0.75rem;
+  color: #12304a;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(3rem, 8vw, 6rem);
   line-height: 0.95;
 }
@@ -52,10 +55,10 @@ h1 {
 
 .weather-panel {
   padding: 2rem;
-  border: 1px solid #c6dfe3;
-  border-radius: 1rem;
+  border: 1px solid rgb(198 223 227 / 80%);
+  border-radius: 1.25rem;
   background: #ffffff;
-  box-shadow: 0 1rem 2rem rgb(24 50 75 / 8%);
+  box-shadow: 0 1.25rem 2.5rem rgb(24 50 75 / 12%);
 }
 
 .weather-panel h2 {
@@ -100,7 +103,20 @@ button {
   padding: 0.75rem 1.25rem;
   color: #ffffff;
   background: #2c7a7b;
+  font-weight: 700;
   cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+button:hover {
+  background: #225e60;
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #e6a65d;
+  outline-offset: 2px;
 }
 
 .empty-state {
