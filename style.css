@@ -99,3 +99,25 @@ button {
   margin-bottom: 0;
   color: #496274;
 }
+
+.current-weather {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #d9e9eb;
+}
+
+.location-name {
+  margin-bottom: 0.5rem;
+  color: #2c7a7b;
+  font-weight: 700;
+}
+
+.current-temperature {
+  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.current-weather p:last-child {
+  margin-bottom: 0;
+}
