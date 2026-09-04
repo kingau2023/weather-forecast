@@ -1,0 +1,69 @@
+:root {
+  color: #18324b;
+  background: #eaf4f6;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+.app-shell {
+  width: min(92%, 960px);
+  margin: 0 auto;
+  padding: 5rem 0;
+}
+
+.app-header {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: #2c7a7b;
+  font: 700 0.8rem/1.2 sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.95;
+}
+
+.intro {
+  max-width: 34rem;
+  margin-bottom: 0;
+  color: #496274;
+  font-size: 1.2rem;
+}
+
+.weather-panel {
+  padding: 2rem;
+  border: 1px solid #c6dfe3;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 1rem 2rem rgb(24 50 75 / 8%);
+}
+
+.weather-panel h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.empty-state {
+  margin-bottom: 0;
+  color: #496274;
+}
