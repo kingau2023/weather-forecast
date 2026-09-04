@@ -1,7 +1,13 @@
 "use strict";
 
-const app = {
-  name: "WeatherApp"
-};
+const searchForm = document.querySelector("#search-form");
+const cityInput = document.querySelector("#city-input");
 
-console.log(`${app.name} is ready.`);
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const city = cityInput.value.trim();
+
+  if (city) {
+    document.querySelector(".empty-state").textContent = `Searching for ${city}...`;
+  }
+});

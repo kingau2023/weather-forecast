@@ -16,6 +16,13 @@
 
     <section class="weather-panel" aria-labelledby="weather-heading">
       <h2 id="weather-heading">Your forecast</h2>
+      <form class="search-form" id="search-form">
+        <label for="city-input">City</label>
+        <div class="search-row">
+          <input id="city-input" name="city" type="search" placeholder="Enter a city" autocomplete="address-level2" required>
+          <button type="submit">Search</button>
+        </div>
+      </form>
       <p class="empty-state">Search for a city to see the latest weather.</p>
     </section>
   </main>
